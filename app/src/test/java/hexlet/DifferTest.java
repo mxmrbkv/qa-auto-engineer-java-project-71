@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DifferTest {
 
-    private static String expectedFlat;
+    private static String expectedStylish;
 
     private static Path getFixturePath(String fileName) {
         return Paths.get("src", "test", "resources", fileName).toAbsolutePath().normalize();
@@ -27,7 +28,7 @@ public class DifferTest {
 
     @BeforeAll
     static void setUp() throws Exception {
-        expectedFlat = readFixture("expected_flat.txt");
+        expectedStylish = readFixture("expected_stylish.txt");
     }
 
     @Test
@@ -36,7 +37,7 @@ public class DifferTest {
         String path2 = getFixturePath("file2.json").toString();
 
         String actual = Differ.generate(path1, path2);
-        assertThat(actual).isEqualTo(expectedFlat);
+        assertThat(actual).isEqualTo(expectedStylish);
     }
 
     @Test
@@ -45,7 +46,7 @@ public class DifferTest {
         String path2 = getFixturePath("file2.json").toString();
 
         String actual = Differ.generate(path1, path2, "stylish");
-        assertThat(actual).isEqualTo(expectedFlat);
+        assertThat(actual).isEqualTo(expectedStylish);
     }
 
     @Test
@@ -54,7 +55,7 @@ public class DifferTest {
         String path2 = getFixturePath("file2.yml").toString();
 
         String actual = Differ.generate(path1, path2);
-        assertThat(actual).isEqualTo(expectedFlat);
+        assertThat(actual).isEqualTo(expectedStylish);
     }
 
     @Test
@@ -63,7 +64,7 @@ public class DifferTest {
         String path2 = getFixturePath("file2.yaml").toString();
 
         String actual = Differ.generate(path1, path2, "stylish");
-        assertThat(actual).isEqualTo(expectedFlat);
+        assertThat(actual).isEqualTo(expectedStylish);
     }
 
     @Test
@@ -72,7 +73,7 @@ public class DifferTest {
         String path2 = getFixturePath("file2.yml").toString();
 
         String actual = Differ.generate(path1, path2);
-        assertThat(actual).isEqualTo(expectedFlat);
+        assertThat(actual).isEqualTo(expectedStylish);
     }
 
     @Test
@@ -81,10 +82,14 @@ public class DifferTest {
         Map<String, Object> data = Differ.getData(path.toString());
 
         assertThat(data)
-                .containsEntry("host", "hexlet.io")
-                .containsEntry("timeout", 50)
-                .containsEntry("proxy", "123.234.53.22")
-                .containsEntry("follow", false);
+                .containsEntry("setting1", "Some value")
+                .containsEntry("setting2", 200)
+                .containsEntry("setting3", true)
+                .containsEntry("key1", "value1")
+                .containsEntry("numbers1", List.of(1, 2, 3, 4))
+                .containsEntry("id", 45)
+                .containsEntry("default", null)
+                .containsEntry("checked", false);
     }
 
     @Test
@@ -93,9 +98,13 @@ public class DifferTest {
         Map<String, Object> data = Differ.getData(path.toString());
 
         assertThat(data)
-                .containsEntry("timeout", 20)
-                .containsEntry("verbose", true)
-                .containsEntry("host", "hexlet.io");
+                .containsEntry("setting1", "Another value")
+                .containsEntry("setting2", 300)
+                .containsEntry("setting3", "none")
+                .containsEntry("key2", "value2")
+                .containsEntry("id", null)
+                .containsEntry("checked", true)
+                .containsEntry("chars2", false);
     }
 
     @Test
@@ -124,7 +133,7 @@ public class DifferTest {
     @Test
     void testRelativePath() throws Exception {
         Map<String, Object> data = Differ.getData("file1.json");
-        assertThat(data).containsKey("host");
+        assertThat(data).containsKey("setting1");
     }
 
     @Test
