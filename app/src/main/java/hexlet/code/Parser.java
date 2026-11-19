@@ -10,7 +10,7 @@ public class Parser {
 
     public static Map<String, Object> parse(String content, String dataFormat) throws Exception {
         if ("json".equalsIgnoreCase(dataFormat)) {
-            return OBJECT_MAPPER.readValue(content, new TypeReference<Map<String, Object>>() { });
+            return OBJECT_MAPPER.readValue(content, new TypeReference<Map<String, Object>>() {});
         }
         throw new IllegalArgumentException("Unsupported data format: " + dataFormat);
     }

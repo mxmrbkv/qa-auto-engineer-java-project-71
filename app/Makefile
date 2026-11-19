@@ -9,4 +9,10 @@ install:
 run-dist:
 	./build/install/app/bin/app
 
-.PHONY: run-dist
+test:
+	./gradlew test
+
+lint:
+	./gradlew spotlessCheck
+
+.PHONY: build test lint

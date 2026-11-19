@@ -3,7 +3,8 @@ package hexlet.code;
 import java.util.*;
 
 public class TreeBuilder {
-    public static List<Map<String, Object>> buildDiffTree(Map<String, Object> data1, Map<String, Object> data2) {
+    public static List<Map<String, Object>> buildDiffTree(
+            Map<String, Object> data1, Map<String, Object> data2) {
         Set<String> keys = new TreeSet<>(data1.keySet());
         keys.addAll(data2.keySet());
 

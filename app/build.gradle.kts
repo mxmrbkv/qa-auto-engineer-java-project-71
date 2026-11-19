@@ -3,6 +3,7 @@ plugins {
     id("java")
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.diffplug.spotless") version "7.0.2"
+    jacoco
 }
 
 group = "hexlet.code"
@@ -28,6 +29,48 @@ spotless {
         formatAnnotations()
         leadingTabsToSpaces(4)
     }
+}
+
+val coverageExcludes = listOf("hexlet/code/App.class")
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it) { exclude(coverageExcludes) }
+        })
+    )
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestCoverageVerification {
+    dependsOn(tasks.jacocoTestReport)
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it) { exclude(coverageExcludes) }
+        })
+    )
+    violationRules {
+        rule {
+            limit {
+                counter = "INSTRUCTION"
+                value = "COVEREDRATIO"
+                minimum = "0.80".toBigDecimal()
+            }
+        }
+    }
+}
+
+tasks.check {
+    dependsOn(tasks.jacocoTestCoverageVerification)
 }
 
 tasks.register("install") {

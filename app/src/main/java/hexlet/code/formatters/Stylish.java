@@ -12,12 +12,35 @@ public class Stylish {
             String type = (String) node.get("type");
 
             switch (type) {
-                case "deleted" -> result.append("  - ").append(key).append(": ").append(node.get("value")).append("\n");
-                case "added" -> result.append("  + ").append(key).append(": ").append(node.get("value")).append("\n");
-                case "unchanged" -> result.append("    ").append(key).append(": ").append(node.get("value")).append("\n");
+                case "deleted" ->
+                        result.append("  - ")
+                                .append(key)
+                                .append(": ")
+                                .append(node.get("value"))
+                                .append("\n");
+                case "added" ->
+                        result.append("  + ")
+                                .append(key)
+                                .append(": ")
+                                .append(node.get("value"))
+                                .append("\n");
+                case "unchanged" ->
+                        result.append("    ")
+                                .append(key)
+                                .append(": ")
+                                .append(node.get("value"))
+                                .append("\n");
                 case "changed" -> {
-                    result.append("  - ").append(key).append(": ").append(node.get("oldValue")).append("\n");
-                    result.append("  + ").append(key).append(": ").append(node.get("newValue")).append("\n");
+                    result.append("  - ")
+                            .append(key)
+                            .append(": ")
+                            .append(node.get("oldValue"))
+                            .append("\n");
+                    result.append("  + ")
+                            .append(key)
+                            .append(": ")
+                            .append(node.get("newValue"))
+                            .append("\n");
                 }
                 default -> throw new RuntimeException("Unknown type: " + type);
             }
