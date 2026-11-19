@@ -36,8 +36,11 @@ tasks.register("install") {
 
 dependencies {
     implementation("info.picocli:picocli:4.7.7")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.assertj:assertj-core:3.26.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
