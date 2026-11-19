@@ -9,6 +9,7 @@ public class Formatter {
             throws Exception {
         return switch (formatName.toLowerCase()) {
             case "stylish" -> Stylish.format(diff);
+            case "plain" -> Plain.format(diff);
             default -> throw new IllegalArgumentException("Unknown format: " + formatName);
         };
     }
