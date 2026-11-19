@@ -1,7 +1,10 @@
-package hexlet.code;
+package hexlet;
 
+import hexlet.code.Differ;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -10,8 +13,39 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DifferTest {
+
+    private static String expectedFlat;
+
     private static Path getFixturePath(String fileName) {
         return Paths.get("src", "test", "resources", fileName).toAbsolutePath().normalize();
+    }
+
+    private static String readFixture(String fileName) throws Exception {
+        Path path = getFixturePath(fileName);
+        return Files.readString(path).replace("\r\n", "\n");
+    }
+
+    @BeforeAll
+    static void setUp() throws Exception {
+        expectedFlat = readFixture("expected_flat.txt");
+    }
+
+    @Test
+    void testGenerateFlatJsonDefaultFormat() throws Exception {
+        String path1 = getFixturePath("file1.json").toString();
+        String path2 = getFixturePath("file2.json").toString();
+
+        String actual = Differ.generate(path1, path2);
+        assertThat(actual).isEqualTo(expectedFlat);
+    }
+
+    @Test
+    void testGenerateFlatJsonStylishFormat() throws Exception {
+        String path1 = getFixturePath("file1.json").toString();
+        String path2 = getFixturePath("file2.json").toString();
+
+        String actual = Differ.generate(path1, path2, "stylish");
+        assertThat(actual).isEqualTo(expectedFlat);
     }
 
     @Test
