@@ -1,5 +1,7 @@
 package hexlet;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.Differ;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,7 @@ public class DifferTest {
 
     private static String expectedStylish;
     private static String expectedPlain;
+    private static String expectedJson;
 
     private static Path getFixturePath(String fileName) {
         return Paths.get("src", "test", "resources", fileName).toAbsolutePath().normalize();
@@ -31,6 +34,7 @@ public class DifferTest {
     static void setUp() throws Exception {
         expectedStylish = readFixture("expected_stylish.txt");
         expectedPlain = readFixture("expected_plain.txt");
+        expectedJson = readFixture("expected_json.json");
     }
 
     @Test
@@ -61,6 +65,19 @@ public class DifferTest {
     }
 
     @Test
+    void testGenerateJsonJsonFormat() throws Exception {
+        String path1 = getFixturePath("file1.json").toString();
+        String path2 = getFixturePath("file2.json").toString();
+
+        String actual = Differ.generate(path1, path2, "json");
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actualTree = mapper.readTree(actual);
+        JsonNode expectedTree = mapper.readTree(expectedJson);
+
+        assertThat(actualTree).isEqualTo(expectedTree);
+    }
+
+    @Test
     void testGenerateFlatYamlDefaultFormat() throws Exception {
         String path1 = getFixturePath("file1.yml").toString();
         String path2 = getFixturePath("file2.yml").toString();
@@ -85,6 +102,19 @@ public class DifferTest {
 
         String actual = Differ.generate(path1, path2, "plain");
         assertThat(actual).isEqualTo(expectedPlain);
+    }
+
+    @Test
+    void testGenerateYamlJsonFormat() throws Exception {
+        String path1 = getFixturePath("file1.yml").toString();
+        String path2 = getFixturePath("file2.yml").toString();
+
+        String actual = Differ.generate(path1, path2, "json");
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actualTree = mapper.readTree(actual);
+        JsonNode expectedTree = mapper.readTree(expectedJson);
+
+        assertThat(actualTree).isEqualTo(expectedTree);
     }
 
     @Test
