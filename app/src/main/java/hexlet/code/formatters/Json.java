@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import java.util.Map;
 
-public class Json {
+class Json {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    public static String format(List<Map<String, Object>> diff) throws JsonProcessingException {
+    static String format(List<Map<String, Object>> diff) throws JsonProcessingException {
         return OBJECT_MAPPER.writeValueAsString(diff);
     }
 }

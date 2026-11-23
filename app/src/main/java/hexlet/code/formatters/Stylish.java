@@ -3,8 +3,8 @@ package hexlet.code.formatters;
 import java.util.List;
 import java.util.Map;
 
-public class Stylish {
-    public static String format(List<Map<String, Object>> diff) {
+class Stylish {
+    static String format(List<Map<String, Object>> diff) {
         StringBuilder result = new StringBuilder("{\n");
 
         for (Map<String, Object> node : diff) {

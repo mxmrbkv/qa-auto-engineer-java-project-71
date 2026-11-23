@@ -1,6 +1,5 @@
 plugins {
     application
-    id("java")
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.diffplug.spotless") version "7.0.2"
     jacoco
@@ -48,7 +47,6 @@ tasks.jacocoTestReport {
 
 tasks.test {
     useJUnitPlatform()
-    finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.jacocoTestCoverageVerification {
@@ -88,6 +86,3 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.test {
-    useJUnitPlatform()
-}

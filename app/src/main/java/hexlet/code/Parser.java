@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import java.util.Map;
 
-public class Parser {
+class Parser {
     private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
     private static final ObjectMapper YAML_MAPPER = new YAMLMapper();
 
-    public static Map<String, Object> parse(String content, String dataFormat) throws Exception {
+    static Map<String, Object> parse(String content, String dataFormat) throws Exception {
         ObjectMapper mapper = getMapper(dataFormat);
         return mapper.readValue(content, new TypeReference<Map<String, Object>>() {});
     }

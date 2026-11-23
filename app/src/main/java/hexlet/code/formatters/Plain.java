@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class Plain {
+class Plain {
 
-    public static String format(List<Map<String, Object>> diff) {
+    static String format(List<Map<String, Object>> diff) {
         List<String> lines = new ArrayList<>();
 
         for (Map<String, Object> node : diff) {
